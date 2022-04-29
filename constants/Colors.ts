@@ -1,5 +1,9 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
+const bg = '#30343F';
+const txt = '#FAFAFF';
+const btn = '#273469';
+const list = '#212529';
 
 export default {
   light: {
@@ -16,4 +20,5 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
   },
+  bg,txt,btn,list
 };
