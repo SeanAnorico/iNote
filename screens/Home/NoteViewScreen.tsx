@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
-import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Dimensions, Alert } from 'react-native';
-import { Button, colors } from 'react-native-elements';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Alert } from 'react-native';
+
 import Colors from '../../constants/Colors';
-import { getData, removeData, storeData } from '../../database/StoreData';
+import { getData, storeData } from '../../database/StoreData';
 import { HomeParamList } from '../../types';
 
 
@@ -24,8 +24,6 @@ export default function NoteViewScreen() {
       description: description,
       time: Date.now(),
     }
-    // console.log(data)
-    // 
     const noteList = await getData('noteList')
     if (noteList) {
       const json = JSON.parse(noteList);
@@ -33,7 +31,6 @@ export default function NoteViewScreen() {
       storeData('noteList', JSON.stringify(json));
     } else {
       storeData('noteList', JSON.stringify([data]));
-      // await removeData('noteList')
     }
 
     navigation.navigate("Home", {
@@ -182,7 +179,6 @@ const styles = StyleSheet.create({
     color: Colors.txt
   },
   desccontainer: {
-    // height: Dimensions.get('screen').height - 250,
     marginBottom: 75,
   }
 });

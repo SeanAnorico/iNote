@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import Colors from '../../constants/Colors';
 import { getData, removeData, storeData } from '../../database/StoreData';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { HomeParamList, NoteParamList } from '../../types';
+import { HomeParamList } from '../../types';
 
 type IRoute = {
     "params": HomeParamList['EditNote'];
@@ -47,24 +47,13 @@ export default function AddNoteScreen() {
             )
             setLoading(false)
 
-        }, 1500)
+        }, 1200)
     }
     useEffect(() => {
         setTitle(note.title);
         setDescription(note.description)
-        // retrieveData();
     }, []);
-
-    const retrieveData = async () => {
-        const noteList = await getData('noteList');
-        if (noteList) {
-            const json = JSON.parse(noteList);
-        }
-        await removeData('noteList');
-
-    }
-
-
+    
     return (
         <View style={styles.container}>
             <TextInput

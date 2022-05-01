@@ -77,16 +77,12 @@ function LogInScreen({ onFinish }) {
                     }}
                 />
                 : null}
-
-
         </View>
     );
 }
 const imgsize = Dimensions.get('screen').width * 0.5;
 const styles = StyleSheet.create({
     container: {
-        // width: Dimensions.get('screen').width,
-        // height: Dimensions.get('screen').height,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

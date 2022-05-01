@@ -1,18 +1,20 @@
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Dimensions, TextInput, BackHandler } from 'react-native';
 import Colors from '../../constants/Colors';
 import { getData } from '../../database/StoreData';
 import { Notes } from '../../models/Notes';
+import Lottieview from "lottie-react-native";
 
 
 
 export default function HomePageScreen() {
   const [note, setNote] = useState<Array<Notes> | null>(null);
+  const [search, setSearch] = useState<string>('')
+  const [searchRes, setSearchRes] = useState<boolean>(false)
 
   const navigation = useNavigation();
-  const navigation2 = useNavigation();
 
   const retrieveData = async () => {
     const noteList = await getData('noteList');
@@ -20,8 +22,31 @@ export default function HomePageScreen() {
       const json = JSON.parse(noteList);
       setNote(json);
     }
-    // await removeData('todoList');
+  }
 
+  const handleSearch = (text) => {
+    setSearch(text);
+    if (!text.trim()) {
+      setSearch('')
+      setSearchRes(false)
+      retrieveData()
+    }
+    const filteredNote = note?.filter(notes => {
+      if (notes.title.toLowerCase().includes(text.toLowerCase())) {
+        return notes;
+      }
+    })
+    if (filteredNote?.length) {
+      setNote([...filteredNote])
+    } else {
+      setSearchRes(true)
+    }
+  }
+
+  const handleClear = () => {
+    setSearch('')
+    setSearchRes(false)
+    retrieveData()
   }
 
   useFocusEffect(
@@ -32,38 +57,77 @@ export default function HomePageScreen() {
 
   return (
     <View style={styles.container}>
-
-      <ScrollView style={styles.listcontainer}>
-        <View>
-          {note && note.map((notes: Notes, index: number) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("NoteView", {
-                  note: notes, index: index
-                });
-              }}
-            >
-              <View style={styles.notecontainer}
-
-              >
-                <Text
-                  style={styles.title}
-                  numberOfLines={1}
-                >
-                  
-                  {notes.title}
-                </Text>
-                <Text
-                  style={styles.desc}
-                  numberOfLines={2}
-                >
-                  {notes.description}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+      {note?.length ?
+        <View
+          style={styles.searchbarContainer}
+        >
+          <TextInput
+            style={styles.searchbar}
+            placeholder='Search Here...'
+            placeholderTextColor={Colors.txt}
+            value={search}
+            onChangeText={handleSearch}
+          />
+          {search ? (
+            <AntDesign
+              name='close'
+              size={20}
+              color={Colors.txt}
+              onPress={handleClear}
+              style={styles.clearIcon}
+            />
+          ) : null}
         </View>
-      </ScrollView>
+        : null}
+      {searchRes ?
+        <View
+          style={[StyleSheet.absoluteFillObject, styles.emptyHeaderContainer]}
+        >
+          <Lottieview style={styles.lottie}
+            source={require('../../assets/lottie/823-crying.json')}
+            autoPlay
+          />
+          <Text
+            style={styles.emptyHeader}
+          >
+            Note not found!!
+          </Text>
+        </View>
+        :
+        <ScrollView style={styles.listcontainer}>
+          <View>
+            {note && note.map((notes: Notes, index: number) => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("NoteView", {
+                    note: notes, index: index
+                  });
+                  setSearch('')
+                }}
+              >
+                <View style={styles.notecontainer}
+
+                >
+                  <Text
+                    style={styles.title}
+                    numberOfLines={1}
+                  >
+                    {notes.title}
+                  </Text>
+                  <Text
+                    style={styles.desc}
+                    numberOfLines={2}
+                  >
+                    {notes.description}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={{ height: 30 }} />
+        </ScrollView>
+      }
+
 
       <View style={styles.btncontainer}>
         <TouchableOpacity
@@ -111,29 +175,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#495057',
   },
   btncontainer: {
     position: 'absolute',
     right: 15,
     bottom: 15,
-    // width: 45,
-    // height: 45,
-    // borderRadius: 45,
-    // backgroundColor: Colors.btn,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // borderWidth: 1,
-    // borderColor: Colors.txt
   },
   notecontainer: {
     height: 100,
     width: '100%',
-    // borderBottomWidth: 1,
-    // borderBottomColor: 'black',
-    // borderTopWidth: 1,
-    // borderTopColor: 'black',
     borderRadius: 10,
     backgroundColor: '#212529',
     paddingHorizontal: 10,
@@ -142,7 +193,7 @@ const styles = StyleSheet.create({
   },
   listcontainer: {
     width: Dimensions.get('screen').width - 20,
-    padding: 20,
+    padding: 10,
     marginBottom: 20,
   },
   title: {
@@ -166,5 +217,27 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: 'bold',
     opacity: 0.5,
-  }
+  },
+  searchbarContainer: {
+    justifyContent: 'center',
+  },
+  searchbar: {
+    borderWidth: 1,
+    borderColor: Colors.txt,
+    height: 40,
+    borderRadius: 40,
+    paddingLeft: 20,
+    fontSize: 20,
+    width: Dimensions.get('screen').width - 50,
+    marginVertical: 10,
+    color: Colors.txt,
+  },
+  clearIcon: {
+    position: 'absolute',
+    right: 15,
+  },
+  lottie: {
+    width: Dimensions.get('screen').width * .7,
+    height: Dimensions.get('screen').height * .25,
+  },
 });

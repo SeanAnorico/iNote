@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
 import {  SettingsParamList } from '../types';
-import { AddNoteScreen, EditNotescreen } from '../screens/Note';
 import Colors from '../constants/Colors';
 import { EditNickNameScreen, SettingsScreen } from '../screens/Settings';
 
@@ -17,7 +16,6 @@ export default function SettingsNavigator() {
             initialRouteName='SettingsPage'
             screenOptions={({ navigation }) => ({
                 title: 'Settings',
-                // headerShown: false,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: Colors.bg
@@ -73,7 +71,6 @@ export default function SettingsNavigator() {
                 name="EditNickname" component={EditNickNameScreen}
             />
             
-            {/* <Stack.Screen options={{title: 'Add Note'}} name="AddNote" component={AddNoteScreen} /> */}
         </Stack.Navigator>
     );
 }

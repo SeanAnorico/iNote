@@ -3,8 +3,7 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
-import { DevelopersParamList, GuideParamList } from '../types';
-import { DevelopersScreen } from '../screens/Developers';
+import { GuideParamList } from '../types';
 import Colors from '../constants/Colors';
 import { GuideScreen } from '../screens/Guide';
 

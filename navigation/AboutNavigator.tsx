@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
-import { HomePageScreen } from '../screens/Home';
 import { AboutParamList } from '../types';
 import { AboutScreen } from '../screens/About';
 import Colors from '../constants/Colors';

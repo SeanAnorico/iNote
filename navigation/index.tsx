@@ -1,8 +1,6 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-import TabOneScreen from '../screens/TabOneScreen';
 
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -11,7 +9,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeNavigator from './HomeNavigator';
 import DevelopersNavigator from './DevelopersNavigator';
 import AboutNavigator from './AboutNavigator';
-import NoteNavigator from './NoteNavigator';
 import CustomDrawer from '../components/CustDrawer';
 import SettingsNavigator from './SettingsNavigator';
 import { FontAwesome } from '@expo/vector-icons';

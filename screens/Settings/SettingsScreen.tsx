@@ -1,14 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
-import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState, } from 'react';
-import { BackHandler } from 'react-native';
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Dimensions, Alert } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { Button, colors } from 'react-native-elements';
 import Colors from '../../constants/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getData, removeData, storeData } from '../../database/StoreData';
-
-
+import { getData, storeData } from '../../database/StoreData';
 
 export default function SettingsScreen() {
     const navigation = useNavigation();
@@ -39,11 +35,7 @@ export default function SettingsScreen() {
             const json = JSON.parse(noteList);
             json.splice(0)
             storeData('noteList', JSON.stringify(json));
-        } else {
-            //   storeData('noteList', JSON.stringify([data]));
-            // await removeData('noteList')
         }
-
         navigation.navigate("Home", {
             screen: "HomePage"
         })
@@ -89,7 +81,6 @@ export default function SettingsScreen() {
                 <View style={styles.btncontainer}>
                     <Button
                         title="Edit Nickname"
-                        // loading={loading}
                         titleStyle={{ fontWeight: '700' }}
                         buttonStyle={{
                             backgroundColor: 'rgba(90, 154, 230, 1)',
@@ -108,7 +99,6 @@ export default function SettingsScreen() {
                     />
                     <Button
                         title="Clear Note"
-                        // loading={loading}
                         titleStyle={{ fontWeight: '700' }}
                         buttonStyle={{
                             backgroundColor: 'red',
@@ -141,10 +131,13 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 25,
         color: Colors.txt,
+        marginBottom: 20,
     },
     name: {
         fontSize: 22,
         color: Colors.txt,
+        alignSelf: 'center',
+        marginBottom: 20,
     },
     btncontainer: {
         marginVertical: 10,

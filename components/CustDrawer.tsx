@@ -1,12 +1,9 @@
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer"
-import React, { useCallback, useEffect, useState } from "react"
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { View, Text, Image, TouchableOpacity } from "react-native"
+import React, { useEffect, useState } from "react"
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, TouchableOpacity, InteractionManager } from "react-native"
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { removeData } from "../database/StoreData";
-import { loadOptions } from "@babel/core";
-
 
 
 const CustomDrawer = props => {
@@ -26,32 +23,22 @@ const CustomDrawer = props => {
         const hrs = new Date().getHours()
         if (hrs === 0 || hrs < 12) {
             return setGreet('Morning');
-        } else if (hrs === 1 || hrs < 17) {
+        } else if (hrs === 12 || hrs < 18) {
             return setGreet('Afternoon');
         } else {
             return setGreet('Evening')
         }
     };
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         findUser()
-    //         findGreet()
-    //         // removeData('user')
-    //     }, 10000)
-    // }, [AsyncStorage.getItem('user')])
 
-
-
-    useFocusEffect(
-        useCallback(() => {
+    useEffect(() => {
+        const task = InteractionManager.runAfterInteractions(() => {
+            // Expensive task
             findUser()
             findGreet()
-            // 
-        }, [])
-    )
+        });
 
-
-
+        return () => task.cancel();
+    })
 
     return (
         <View style={{ flex: 1 }}>
@@ -99,29 +86,6 @@ const CustomDrawer = props => {
                         </Text>
 
                     </View>
-                    {/* <TouchableOpacity
-                        style={{
-                            // position: 'relative',
-                            // bottom: 50,
-                            // right: 0,
-                            // left: 0,
-                            backgroundColor: '#6C757D',
-                            padding: 10,
-                            marginHorizontal: 5,
-                            marginTop: 7,
-                            borderRadius: 5,
-                            width: '100%',
-                            alignItems: 'center',
-                            alignSelf: 'center'
-                        }}
-                    >
-                        <Text style={{
-                            color: 'white',
-                            fontSize: 18
-                        }}>
-                            Log Out
-                        </Text>
-                    </TouchableOpacity> */}
                 </View>
                 <DrawerItemList {...props} />
             </DrawerContentScrollView>

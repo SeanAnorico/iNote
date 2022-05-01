@@ -7,9 +7,7 @@ import { NoteParamList } from '../types';
 import { AddNoteScreen, EditNotescreen } from '../screens/Note';
 import Colors from '../constants/Colors';
 
-
 const Stack = createStackNavigator<NoteParamList>();
-// const Stack = createStackNavigator();
 
 export default function NoteNavigator() {
     return (
@@ -17,7 +15,6 @@ export default function NoteNavigator() {
             initialRouteName='AddNote'
             screenOptions={({ navigation }) => ({
                 title: 'Add Note',
-                // headerShown: false,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: Colors.bg
@@ -72,8 +69,6 @@ export default function NoteNavigator() {
                 }}
                 name="AddNote" component={AddNoteScreen}
             />
-            
-            {/* <Stack.Screen options={{title: 'Add Note'}} name="AddNote" component={AddNoteScreen} /> */}
         </Stack.Navigator>
     );
 }

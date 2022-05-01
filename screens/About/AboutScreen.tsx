@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: '#495057',
     paddingTop: 20,
   },
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get('screen').height * .25,
   },
   scrollview: {
-    // flex: 1,
     width: "100%",
     backgroundColor: "#212529",
     borderTopLeftRadius: 40,

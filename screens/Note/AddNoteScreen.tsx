@@ -35,16 +35,7 @@ export default function AddNoteScreen() {
         screen: "HomePage"
       })
       setLoading(false)
-    }, 1500)
-  }
-
-  const retrieveData = async () => {
-    const noteList = await getData('noteList');
-    if (noteList) {
-      const json = JSON.parse(noteList);
-      console.log(json);
-    }
-    // await removeData('todoList');
+    }, 1200)
   }
 
   return (
@@ -111,16 +102,12 @@ export default function AddNoteScreen() {
           }}
         />
         : null}
-
-
     </View>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').height,
     alignItems: 'center',

@@ -1,8 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
-import { RouteProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, Dimensions, Alert } from 'react-native';
-import { Button, colors } from 'react-native-elements';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { Button } from 'react-native-elements';
 import Colors from '../../constants/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextInput } from 'react-native-paper';
@@ -33,6 +32,11 @@ export default function EditNickNameScreen() {
     )
     return (
         <View style={styles.container}>
+            <Text
+                style={styles.inputtitle}
+            >
+                Enter your new Nickname
+            </Text>
             <TextInput
                 label=''
                 placeholder='Enter your nickname'
@@ -53,11 +57,10 @@ export default function EditNickNameScreen() {
             {un.trim().length >= 3 ?
                 <Button
                     title="SAVE"
-                    // loading={loading}
                     icon={{
                         name: 'arrow-right',
                         type: 'font-awesome',
-                        size: 25,
+                        size: 16,
                         color: 'white',
                         reverse: false,
                     }}
@@ -71,7 +74,7 @@ export default function EditNickNameScreen() {
                         borderRadius: 30,
                     }}
                     containerStyle={{
-                        width: 200,
+                        width: 150,
                         marginHorizontal: 50,
                         marginVertical: 10,
                     }}
@@ -98,5 +101,13 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width - 70,
         marginVertical: 10,
         backgroundColor: '#6c757d'
+    },
+    inputtitle: {
+        alignSelf: 'flex-start',
+        color: Colors.txt,
+        fontSize: 18,
+        paddingLeft: Dimensions.get('screen').width * 0.1,
+        marginBottom: 5,
+        opacity: 0.5,
     },
 });

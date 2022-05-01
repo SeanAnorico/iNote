@@ -6,18 +6,14 @@ import { TouchableOpacity } from 'react-native';
 import { HomePageScreen, NoteViewScreen } from '../screens/Home';
 import { HomeParamList } from '../types';
 import Colors from '../constants/Colors';
-import NoteNavigator from './NoteNavigator';
 import { AddNoteScreen, EditNotescreen } from '../screens/Note';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LogInScreen from '../screens/Intro/LogInScreen';
-import { removeData } from '../database/StoreData';
 import { useFocusEffect } from '@react-navigation/native';
 
 const Stack = createStackNavigator<HomeParamList>();
-// const Stack2 = createStackNavigator();
-
 export default function HomeNavigator() {
     const [user, setUser] = useState('')
     const findUser = async () => {
@@ -26,14 +22,9 @@ export default function HomeNavigator() {
             setUser(JSON.parse(result));
         }
     }
-    // useEffect(() => {
-    //     findUser()
-    //     // removeData('user')
-    // }, [])
     useFocusEffect(
         useCallback(() => {
           findUser();
-        //   removeData('user')
         }, [])
       )
 
